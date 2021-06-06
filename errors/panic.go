@@ -36,11 +36,11 @@ func (p *PanicError) Recovered() interface{} {
 	return p.rvr
 }
 
-func Recover() *PanicError {
+func Recover() Panic {
 	if rvr := recover(); rvr == nil {
 		// no error
 		return nil
-	} else if p, ok := rvr.(*PanicError); ok {
+	} else if p, ok := rvr.(Panic); ok {
 		// pass previous panic along
 		return p
 	} else {
@@ -49,7 +49,7 @@ func Recover() *PanicError {
 	}
 }
 
-func panicError(rvr interface{}) *PanicError {
+func panicError(rvr interface{}) Panic {
 	return &PanicError{
 		rvr:   rvr,
 		stack: BackTrace(2),
