@@ -5,6 +5,9 @@ import (
 )
 
 type Panic interface {
+	StackTracer
+
+	Error() string
 	Recovered() interface{}
 }
 
