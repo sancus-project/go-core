@@ -36,6 +36,21 @@ func WithStackTrace(skip int, err error) error {
 	}
 }
 
+func StackTrace(err error) Stack {
+	for err != nil {
+		if e, ok := err.(StackTracer); ok {
+			st := e.StackTrace()
+			if st != nil {
+				return st
+			}
+		}
+
+		err = Unwrap(err)
+	}
+
+	return nil
+}
+
 type Panic interface {
 	Recovered() interface{}
 }
