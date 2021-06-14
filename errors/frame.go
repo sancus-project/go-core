@@ -48,6 +48,22 @@ func (f Frame) Name() string {
 	return f.name
 }
 
+func (f Frame) File() string {
+	return f.file
+}
+
+func (f Frame) Line() int {
+	return f.line
+}
+
+func (f Frame) FileLine() string {
+	if f.line > 0 {
+		return fmt.Sprintf("%s:%v", f.file, f.line)
+	} else {
+		return f.file
+	}
+}
+
 // Format formats the frame according to the fmt.Formatter interface.
 //
 //    %s    source file
