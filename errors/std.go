@@ -6,7 +6,9 @@ import (
 )
 
 func New(s string, args ...interface{}) error {
-	if len(args) > 0 {
+	if len(s) == 0 {
+		return nil
+	} else if len(args) > 0 {
 		return fmt.Errorf(s, args...)
 	}
 
