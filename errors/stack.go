@@ -32,16 +32,25 @@ func WithStackTrace(skip int, err error) error {
 	}
 }
 
-func StackTrace(err error) Stack {
+func AsStackTracer(err error) (StackTracer, bool) {
 	for err != nil {
 		if e, ok := err.(StackTracer); ok {
 			st := e.StackTrace()
-			if st != nil {
-				return st
+			if len(st) > 0 {
+				return e, true
 			}
 		}
 
 		err = Unwrap(err)
+	}
+
+	return nil, false
+}
+
+func StackTrace(err error) Stack {
+
+	if e, ok := AsStackTracer(err); ok {
+		return e.StackTrace()
 	}
 
 	return nil
