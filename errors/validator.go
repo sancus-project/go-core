@@ -54,3 +54,15 @@ func (s *ErrorStack) AppendErrorf(str string, args ...interface{}) {
 		s.AppendError(New(str, args...))
 	}
 }
+
+func (s *ErrorStack) MissingField(str string, args ...interface{}) {
+	if err := ErrMissingField(str, args...); err != nil {
+		s.errors = append(s.errors, err)
+	}
+}
+
+func (s *ErrorStack) MissingArgument(str string, args ...interface{}) {
+	if err := ErrMissingArgument(str, args...); err != nil {
+		s.errors = append(s.errors, err)
+	}
+}
