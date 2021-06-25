@@ -24,7 +24,7 @@ func (w *Wrapped) Unwrap() error {
 	return nil
 }
 
-func Wrap(err error, s string, args... interface{}) error {
+func Wrap(err error, s string, args ...interface{}) error {
 	if err != nil {
 		if len(s) > 0 {
 			if len(args) > 0 {
