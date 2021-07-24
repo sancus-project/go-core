@@ -44,8 +44,14 @@ func (s ErrorStack) Errors() []error {
 }
 
 func (s *ErrorStack) AppendError(err error) {
-	if err != nil {
+	if err == nil {
+		// skip
+	} else if nerr, ok := AsValidator(err); !ok {
+		// simple
 		s.errors = append(s.errors, err)
+	} else if !err.Ok() {
+		// nested
+		s.errors = append(s.errors, nerr.Errors()...)
 	}
 }
 
