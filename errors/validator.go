@@ -49,7 +49,7 @@ func (s *ErrorStack) AppendError(err error) {
 	} else if nerr, ok := AsValidator(err); !ok {
 		// simple
 		s.errors = append(s.errors, err)
-	} else if !err.Ok() {
+	} else if !nerr.Ok() {
 		// nested
 		s.errors = append(s.errors, nerr.Errors()...)
 	}
