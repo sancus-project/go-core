@@ -40,7 +40,7 @@ func As${N}N(v interface{}, bitsize int) ($t, bool) {
 			ok = true
 		}
 	case $t0:
-		n, ok = as${N}N($t(w), intsize, bitsize)
+		n, ok = as${N}N($t(w), IntSize, bitsize)
 EOT
 
 for x in $sizes; do
@@ -67,7 +67,7 @@ esac
 if [ -n "$t1" ]; then
 	for x in + $sizes; do
 		if [ "$x" = + ]; then
-			s=intsize
+			s=IntSize
 			x=
 		else
 			s=$x
@@ -142,7 +142,7 @@ EOT
 	for x in $greater; do
 
 	if [ "$x" = '+' ]; then
-		s=intsize
+		s=IntSize
 		x=
 	else
 		s=$x
@@ -164,7 +164,7 @@ esac
 if [ -n "$t1" ]; then
 	for x in $S $greater $lower; do
 		if [ "$x" = '+' ]; then
-			s=intsize
+			s=IntSize
 			x=
 		else
 			s=$x

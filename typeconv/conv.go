@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-const intsize = 32 << (^uint(0) >> 32 & 1) // 32 or 64
+const IntSize = 32 << (^uint(0) >> 32 & 1) // 32 or 64
 
 func asIntN(n int64, size, bitsize int) (int64, bool) {
 	// caller is trusted to not lie about size
@@ -83,7 +83,7 @@ func asUintN2(n int64, size, bitsize int) (uint64, bool) {
 func AsInt(v interface{}) (int, bool) {
 	if n, ok := v.(int); ok {
 		return n, true
-	} else if n, ok := AsIntN(v, intsize); ok {
+	} else if n, ok := AsIntN(v, IntSize); ok {
 		return int(n), true
 	} else {
 		return 0, false
@@ -93,7 +93,7 @@ func AsInt(v interface{}) (int, bool) {
 func AsUint(v interface{}) (uint, bool) {
 	if u, ok := v.(uint); ok {
 		return u, true
-	} else if u, ok := AsUintN(v, intsize); ok {
+	} else if u, ok := AsUintN(v, IntSize); ok {
 		return uint(u), true
 	} else {
 		return 0, false

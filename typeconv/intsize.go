@@ -20,7 +20,7 @@ func AsIntN(v interface{}, bitsize int) (int64, bool) {
 			ok = true
 		}
 	case int:
-		n, ok = asIntN(int64(w), intsize, bitsize)
+		n, ok = asIntN(int64(w), IntSize, bitsize)
 	case int64:
 		n, ok = asIntN(w, 64, bitsize)
 	case int32:
@@ -30,7 +30,7 @@ func AsIntN(v interface{}, bitsize int) (int64, bool) {
 	case int8:
 		n, ok = asIntN(int64(w), 8, bitsize)
 	case uint:
-		n, ok = asIntN2(uint64(w), intsize, 64)
+		n, ok = asIntN2(uint64(w), IntSize, 64)
 	case uint64:
 		n, ok = asIntN2(uint64(w), 64, 64)
 	case uint32:
@@ -75,7 +75,7 @@ func AsInt64(v interface{}) (int64, bool) {
 	case uint8:
 		n, ok = asIntN2(uint64(w), 8, 64)
 	case uint:
-		n, ok = asIntN2(uint64(w), intsize, 64)
+		n, ok = asIntN2(uint64(w), IntSize, 64)
 	}
 
 	return int64(n), ok
@@ -128,13 +128,13 @@ func AsInt32(v interface{}) (int32, bool) {
 	case int8:
 		return int32(w), true
 	case int:
-		n, ok = asIntN(int64(w), intsize, 32)
+		n, ok = asIntN(int64(w), IntSize, 32)
 	case int64:
 		n, ok = asIntN(int64(w), 64, 32)
 	case uint32:
 		n, ok = asIntN2(uint64(w), 32, 32)
 	case uint:
-		n, ok = asIntN2(uint64(w), intsize, 32)
+		n, ok = asIntN2(uint64(w), IntSize, 32)
 	case uint64:
 		n, ok = asIntN2(uint64(w), 64, 32)
 	case uint16:
@@ -191,7 +191,7 @@ func AsInt16(v interface{}) (int16, bool) {
 	case int8:
 		return int16(w), true
 	case int:
-		n, ok = asIntN(int64(w), intsize, 16)
+		n, ok = asIntN(int64(w), IntSize, 16)
 	case int64:
 		n, ok = asIntN(int64(w), 64, 16)
 	case int32:
@@ -199,7 +199,7 @@ func AsInt16(v interface{}) (int16, bool) {
 	case uint16:
 		n, ok = asIntN2(uint64(w), 16, 16)
 	case uint:
-		n, ok = asIntN2(uint64(w), intsize, 16)
+		n, ok = asIntN2(uint64(w), IntSize, 16)
 	case uint64:
 		n, ok = asIntN2(uint64(w), 64, 16)
 	case uint32:
@@ -254,7 +254,7 @@ func AsInt8(v interface{}) (int8, bool) {
 	case int8:
 		return w, true
 	case int:
-		n, ok = asIntN(int64(w), intsize, 8)
+		n, ok = asIntN(int64(w), IntSize, 8)
 	case int64:
 		n, ok = asIntN(int64(w), 64, 8)
 	case int32:
@@ -264,7 +264,7 @@ func AsInt8(v interface{}) (int8, bool) {
 	case uint8:
 		n, ok = asIntN2(uint64(w), 8, 8)
 	case uint:
-		n, ok = asIntN2(uint64(w), intsize, 8)
+		n, ok = asIntN2(uint64(w), IntSize, 8)
 	case uint64:
 		n, ok = asIntN2(uint64(w), 64, 8)
 	case uint32:
@@ -317,7 +317,7 @@ func AsUintN(v interface{}, bitsize int) (uint64, bool) {
 			ok = true
 		}
 	case uint:
-		n, ok = asUintN(uint64(w), intsize, bitsize)
+		n, ok = asUintN(uint64(w), IntSize, bitsize)
 	case uint64:
 		n, ok = asUintN(w, 64, bitsize)
 	case uint32:
@@ -327,7 +327,7 @@ func AsUintN(v interface{}, bitsize int) (uint64, bool) {
 	case uint8:
 		n, ok = asUintN(uint64(w), 8, bitsize)
 	case int:
-		n, ok = asUintN2(int64(w), intsize, 64)
+		n, ok = asUintN2(int64(w), IntSize, 64)
 	case int64:
 		n, ok = asUintN2(int64(w), 64, 64)
 	case int32:
@@ -372,7 +372,7 @@ func AsUint64(v interface{}) (uint64, bool) {
 	case int8:
 		n, ok = asUintN2(int64(w), 8, 64)
 	case int:
-		n, ok = asUintN2(int64(w), intsize, 64)
+		n, ok = asUintN2(int64(w), IntSize, 64)
 	}
 
 	return uint64(n), ok
@@ -425,13 +425,13 @@ func AsUint32(v interface{}) (uint32, bool) {
 	case uint8:
 		return uint32(w), true
 	case uint:
-		n, ok = asUintN(uint64(w), intsize, 32)
+		n, ok = asUintN(uint64(w), IntSize, 32)
 	case uint64:
 		n, ok = asUintN(uint64(w), 64, 32)
 	case int32:
 		n, ok = asUintN2(int64(w), 32, 32)
 	case int:
-		n, ok = asUintN2(int64(w), intsize, 32)
+		n, ok = asUintN2(int64(w), IntSize, 32)
 	case int64:
 		n, ok = asUintN2(int64(w), 64, 32)
 	case int16:
@@ -488,7 +488,7 @@ func AsUint16(v interface{}) (uint16, bool) {
 	case uint8:
 		return uint16(w), true
 	case uint:
-		n, ok = asUintN(uint64(w), intsize, 16)
+		n, ok = asUintN(uint64(w), IntSize, 16)
 	case uint64:
 		n, ok = asUintN(uint64(w), 64, 16)
 	case uint32:
@@ -496,7 +496,7 @@ func AsUint16(v interface{}) (uint16, bool) {
 	case int16:
 		n, ok = asUintN2(int64(w), 16, 16)
 	case int:
-		n, ok = asUintN2(int64(w), intsize, 16)
+		n, ok = asUintN2(int64(w), IntSize, 16)
 	case int64:
 		n, ok = asUintN2(int64(w), 64, 16)
 	case int32:
@@ -551,7 +551,7 @@ func AsUint8(v interface{}) (uint8, bool) {
 	case uint8:
 		return w, true
 	case uint:
-		n, ok = asUintN(uint64(w), intsize, 8)
+		n, ok = asUintN(uint64(w), IntSize, 8)
 	case uint64:
 		n, ok = asUintN(uint64(w), 64, 8)
 	case uint32:
@@ -561,7 +561,7 @@ func AsUint8(v interface{}) (uint8, bool) {
 	case int8:
 		n, ok = asUintN2(int64(w), 8, 8)
 	case int:
-		n, ok = asUintN2(int64(w), intsize, 8)
+		n, ok = asUintN2(int64(w), IntSize, 8)
 	case int64:
 		n, ok = asUintN2(int64(w), 64, 8)
 	case int32:
