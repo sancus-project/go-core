@@ -32,6 +32,13 @@ func WithStackTrace(skip int, err error) error {
 	}
 }
 
+func NewWithStackTrace(skip int, s string, args ...interface{}) error {
+	return &StackError{
+		err: New(s, args...),
+		stack: BackTrace(1 + skip),
+	}
+}
+
 func AsStackTracer(err error) (StackTracer, bool) {
 	for err != nil {
 		if e, ok := err.(StackTracer); ok {
