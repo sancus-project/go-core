@@ -19,16 +19,21 @@ import (
 EOT
 
 generateN() {
-	local N="$1" S="64"
+	local N="$1" S="64" a=
 	local n="${N}$S"
 	local t="$(echo "$n" | tr A-Z a-z)"
 	local t0="$(echo "$N" | tr A-Z a-z)"
 	local sizes="64 32 16 8"
 	local x= w=
 
+	if [ "$t0" = int ]; then
+		a=an
+	else
+		a=a
+	fi
 	cat <<EOT
 
-// As${N}N tries to convert data into a $t0 of given size
+// As${N}N tries to convert data into $a $t0 of given size
 func As${N}N(v interface{}, bitsize int) ($t, bool) {
 	var n $t
 	var ok bool
@@ -89,12 +94,18 @@ EOT
 }
 
 generate() {
-	local N="$1" S="$2"
+	local N="$1" S="$2" a=
 	local n="$N$S"
 	local t="$(echo "$n" | tr A-Z a-z)"
 	local t0="$(echo "$N" | tr A-Z a-z)"
 	local lower= greater=
 	local x=
+
+	if [ "$t0" = int ]; then
+		a=an
+	else
+		a=a
+	fi
 
 	for x in 64 32 16 8; do
 		if [ $x -gt $S ]; then
@@ -112,7 +123,7 @@ generate() {
 
 	cat <<EOT
 
-// As$n tries to convert data into a $t
+// As$n tries to convert data into $a $t
 func As$n(v interface{}) ($t, bool) {
 	var n ${t0}64
 	var ok bool

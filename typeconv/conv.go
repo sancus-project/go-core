@@ -1,3 +1,4 @@
+// Package to help convert safely interface{} values into specific types
 package typeconv
 
 import (
@@ -80,6 +81,7 @@ func asUintN2(n int64, size, bitsize int) (uint64, bool) {
 	return 0, false
 }
 
+// AsInt tries to convert data into an int
 func AsInt(v interface{}) (int, bool) {
 	if n, ok := v.(int); ok {
 		return n, true
@@ -90,6 +92,7 @@ func AsInt(v interface{}) (int, bool) {
 	}
 }
 
+// AsInt tries to convert data into a uint
 func AsUint(v interface{}) (uint, bool) {
 	if u, ok := v.(uint); ok {
 		return u, true
@@ -100,6 +103,7 @@ func AsUint(v interface{}) (uint, bool) {
 	}
 }
 
+// AsInt tries to convert data into a string
 func AsString(v interface{}) (string, bool) {
 	if v == nil {
 		return "", false
@@ -113,6 +117,7 @@ func AsString(v interface{}) (string, bool) {
 	}
 }
 
+// AsInt tries to convert data into a slice of something
 func AsSlice(v interface{}) ([]interface{}, bool) {
 	switch w := v.(type) {
 	case []interface{}:
