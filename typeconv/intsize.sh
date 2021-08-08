@@ -34,19 +34,15 @@ generateN() {
 	cat <<EOT
 
 // As${N}N tries to convert data into $a $t0 of given size
-func As${N}N(v interface{}, bitsize int) ($t, bool) {
+func As${N}N(v interface{}, bitsize int) ($t, error) {
 	var n $t
-	var ok bool
+	var err error
 
 	switch w := v.(type) {
 	case string:
-		var err error
 		n, err = strconv.Parse$N(w, 10, bitsize)
-		if err == nil {
-			ok = true
-		}
 	case $t0:
-		n, ok = as${N}N($t(w), IntSize, bitsize)
+		n, err = as${N}N($t(w), IntSize, bitsize)
 EOT
 
 for x in $sizes; do
@@ -59,7 +55,7 @@ for x in $sizes; do
 
 	cat <<EOT
 	case $t0$x:
-		n, ok = as${N}N($w, $s, bitsize)
+		n, err = as${N}N($w, $s, bitsize)
 EOT
 done
 
@@ -80,15 +76,17 @@ if [ -n "$t1" ]; then
 		fi
 	cat <<EOT
 	case ${t1}$x:
-		n, ok = $p(${t1}64(w), $s, $S)
+		n, err = $p(${t1}64(w), $s, $S)
 EOT
 	done
 fi
 
 cat <<EOT
+	default:
+		err = InvalidTypeError(v)
 	}
 
-	return $t(n), ok
+	return $t(n), err
 }
 EOT
 }
@@ -124,19 +122,15 @@ generate() {
 	cat <<EOT
 
 // As$n tries to convert data into $a $t
-func As$n(v interface{}) ($t, bool) {
+func As$n(v interface{}) ($t, error) {
 	var n ${t0}64
-	var ok bool
+	var err error
 
 	switch w := v.(type) {
 	case string:
-		var err error
 		n, err = strconv.Parse$N(w, 10, $S)
-		if err == nil {
-			ok = true
-		}
 	case $t:
-		return w, true
+		return w, nil
 EOT
 
 # smaller types are always good
@@ -146,7 +140,7 @@ EOT
 		fi
 cat <<EOT
 	case $t0$x:
-		return $t(w), true
+		return $t(w), nil
 EOT
 	done
 
@@ -162,7 +156,7 @@ EOT
 
 cat <<EOT
 	case $t0$x:
-		n, ok = as${N}N(${t0}64(w), $s, $S)
+		n, err = as${N}N(${t0}64(w), $s, $S)
 EOT
 	done
 
@@ -183,15 +177,17 @@ if [ -n "$t1" ]; then
 		fi
 		cat <<EOT
 	case $t1$x:
-		n, ok = $p(${t1}64(w), $s, $S)
+		n, err = $p(${t1}64(w), $s, $S)
 EOT
 	done
 fi
 
 cat <<EOT
+	default:
+		err = InvalidTypeError(v)
 	}
 
-	return $t(n), ok
+	return $t(n), err
 }
 EOT
 }

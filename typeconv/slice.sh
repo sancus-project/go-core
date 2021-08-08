@@ -21,31 +21,33 @@ generate() {
 cat <<EOT
 
 // As${n}Slice tries to convert data into a slice of $t
-func As${n}Slice(v interface{}) ([]$t, bool) {
+func As${n}Slice(v interface{}) ([]$t, error) {
 	switch w := v.(type) {
 	case []$t:
 		// ready
-		return w, true
+		return w, nil
 	case []interface{}:
 		// slice of something else, convert them to $n
 		out := make([]$t, 0, len(w))
 		for _, o := range w {
-			if n, ok := As$n(o); ok {
+			if n, err := As$n(o); err == nil {
 				out = append(out, n)
 			} else {
 				// failed
-				return nil, false
+				return nil, err
 			}
 		}
-		return out, true
+		return out, nil
 	case interface{}:
 		// promote single element to slice
-		if n, ok := As$n(v); ok {
-			return []$t{n}, true
+		if n, err := As$n(v); err != nil {
+			return nil, err
+		} else {
+			return []$t{n}, nil
 		}
+	default:
+		return nil, InvalidTypeError(v)
 	}
-
-	return nil, false
 }
 EOT
 }
