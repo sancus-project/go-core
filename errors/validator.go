@@ -39,10 +39,12 @@ func (s ErrorStack) Error() string {
 	return strings.Join(errors, "\n")
 }
 
+// Errors() returns the included errors
 func (s ErrorStack) Errors() []error {
 	return s.errors
 }
 
+// Appends an error
 func (s *ErrorStack) AppendError(err error) {
 	if err == nil {
 		// skip
@@ -55,10 +57,19 @@ func (s *ErrorStack) AppendError(err error) {
 	}
 }
 
+// Appends a described error
 func (s *ErrorStack) AppendErrorf(str string, args ...interface{}) {
 	if len(str) > 0 {
 		s.AppendError(New(str, args...))
 	}
+}
+
+// Appends a described error wrapping another error
+func (s *ErrorStack) AppendWrapped(err error, str string, args ...interface{}) {
+	if len(str) > 0 {
+		err = Wrap(err, str, args...)
+	}
+	s.AppendError(err)
 }
 
 func (s *ErrorStack) MissingField(str string, args ...interface{}) {
