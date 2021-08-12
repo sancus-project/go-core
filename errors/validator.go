@@ -71,15 +71,3 @@ func (s *ErrorStack) AppendWrapped(err error, str string, args ...interface{}) {
 	}
 	s.AppendError(err)
 }
-
-func (s *ErrorStack) MissingField(str string, args ...interface{}) {
-	if err := ErrMissingField(str, args...); err != nil {
-		s.errors = append(s.errors, err)
-	}
-}
-
-func (s *ErrorStack) MissingArgument(str string, args ...interface{}) {
-	if err := ErrMissingArgument(str, args...); err != nil {
-		s.errors = append(s.errors, err)
-	}
-}
