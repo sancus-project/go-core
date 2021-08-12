@@ -26,11 +26,11 @@ func (w *Wrapped) Unwrap() error {
 
 func Wrap(err error, s string, args ...interface{}) error {
 	if err != nil {
-		if len(s) > 0 {
-			if len(args) > 0 {
-				s = fmt.Sprintf(s, args...)
-			}
+		if len(args) > 0 {
+			s = fmt.Sprintf(s, args...)
+		}
 
+		if len(s) > 0 {
 			err = &Wrapped{
 				err: err,
 				msg: s,
