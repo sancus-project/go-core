@@ -3,6 +3,7 @@ package typeconv
 
 import (
 	"fmt"
+	"strconv"
 )
 
 const IntSize = 32 << (^uint(0) >> 32 & 1) // 32 or 64
@@ -114,6 +115,19 @@ func AsString(v interface{}) (string, error) {
 	} else {
 		s := fmt.Sprintf("%v", v)
 		return s, nil
+	}
+}
+
+// AsBool tries to convert data into a bool
+func AsBool(v interface{}) (bool, error) {
+	if v == nil {
+		return false, InvalidTypeError(v)
+	} else if x, ok := v.(bool); ok {
+		return x, nil
+	} else if s, ok := v.(string); !ok {
+		return false, InvalidTypeError(v)
+	} else {
+		return strconv.ParseBool(s)
 	}
 }
 
