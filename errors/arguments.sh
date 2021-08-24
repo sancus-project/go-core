@@ -100,6 +100,8 @@ for x in Value Argument; do
 	generate Invalid $x
 done
 
+generate Not Implemented
+
 if ! diff -u "$F" "$F~" >&2; then
 	mv "$F~" "$F"
 fi

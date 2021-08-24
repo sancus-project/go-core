@@ -263,3 +263,67 @@ func (s *ErrorStack) AppendInvalidArgumentError(err error, str string, args ...i
 		s.errors = append(s.errors, e)
 	}
 }
+
+// Error representing a Not Implemented
+type NotImplementedError struct {
+	s   string
+	err error
+}
+
+func (e NotImplementedError) Unwrap() error {
+	return e.err
+}
+
+func (e NotImplementedError) Error() string {
+	s := "Not Implemented"
+
+	if len(e.s) > 0 {
+		s = fmt.Sprintf("%s: %s", s, e.s)
+	}
+
+	if e.err != nil {
+		s = fmt.Sprintf("%s: %s", s, e.err.Error())
+	}
+
+	return s
+}
+
+// Creates new NotImplementedError formatting arguments
+func ErrNotImplemented(str string, args ...interface{}) *NotImplementedError {
+	if len(args) > 0 {
+		str = fmt.Sprintf(str, args...)
+	}
+
+	if len(str) > 0 {
+		return &NotImplementedError{str, nil}
+	}
+
+	return nil
+}
+
+func AsNotImplementedError(err error, str string, args ...interface{}) *NotImplementedError {
+	if err != nil {
+		e := ErrNotImplemented(str, args...)
+		if e != nil {
+			e.err = err
+		} else {
+			e = &NotImplementedError{"", err}
+		}
+		return e
+	}
+	return nil
+}
+
+// Adds NotImplemented to ErrorStack
+func (s *ErrorStack) NotImplemented(str string, args ...interface{}) {
+	if err := ErrNotImplemented(str, args...); err != nil {
+		s.errors = append(s.errors, err)
+	}
+}
+
+// Adds wrapped error as NotImplemented to ErrorStack
+func (s *ErrorStack) AppendNotImplementedError(err error, str string, args ...interface{}) {
+	if e := AsNotImplementedError(err, str, args...); e != nil {
+		s.errors = append(s.errors, e)
+	}
+}
