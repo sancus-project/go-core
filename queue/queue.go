@@ -36,7 +36,15 @@ func (q *Queue) Pop() (interface{}, bool) {
 	defer q.mu.Unlock()
 
 	if p := q.next; p != nil {
-		q.next = p.next
+		if next := p.next; next == nil {
+			// emptied
+			q.next = nil
+			q.last = nil
+		} else {
+			// shift
+			q.next = next
+		}
+
 		return p.v, true
 	}
 
