@@ -16,6 +16,10 @@ type Queue struct {
 	last *entry
 }
 
+func (q *Queue) Empty() bool {
+	return q.next == nil
+}
+
 func (q *Queue) Push(v interface{}) {
 	p := &entry{v: v}
 
