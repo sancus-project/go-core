@@ -44,6 +44,14 @@ func (s ErrorStack) Errors() []error {
 	return s.errors
 }
 
+// AsError() returns nil of Ok() or itself if not
+func (s *ErrorStack) AsError() error {
+	if !s.Ok() {
+		return s
+	}
+	return nil
+}
+
 // Appends an error
 func (s *ErrorStack) AppendError(err error) {
 	if err == nil {
