@@ -79,3 +79,10 @@ func (s *ErrorStack) AppendWrapped(err error, str string, args ...interface{}) {
 	}
 	s.AppendError(err)
 }
+
+// New ErrorStack wrapping a given list of errors
+func NewErrorStack(errs ...error) ErrorStack {
+	return ErrorStack{
+		errors: errs,
+	}
+}
