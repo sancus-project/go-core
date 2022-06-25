@@ -82,7 +82,20 @@ func (s *ErrorStack) AppendWrapped(err error, str string, args ...interface{}) {
 
 // New ErrorStack wrapping a given list of errors
 func NewErrorStack(errs ...error) ErrorStack {
+
+	j := 0
+	for i, err := range errs {
+		if err == nil {
+			continue
+		}
+
+		if i != j {
+			errs[j] = err
+		}
+		j++
+	}
+
 	return ErrorStack{
-		errors: errs,
+		errors: errs[:j],
 	}
 }
